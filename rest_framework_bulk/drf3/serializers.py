@@ -39,7 +39,7 @@ class BulkListSerializer(ListSerializer):
         id_attr = getattr(self.child.Meta, 'update_lookup_field', 'id')
 
         all_validated_data_by_id = {
-            i.pop(id_attr): i
+            str(i.pop(id_attr)): i
             for i in all_validated_data
         }
 
@@ -60,7 +60,7 @@ class BulkListSerializer(ListSerializer):
         updated_objects = []
 
         for obj in objects_to_update:
-            obj_id = getattr(obj, id_attr)
+            obj_id = str(getattr(obj, id_attr))
             obj_validated_data = all_validated_data_by_id.get(obj_id)
 
             # use model serializer to actually update the model
